@@ -5,7 +5,7 @@ If using bracket programming languages use K&R (One True Brace Style variant).\
 
 Exceptions to Google's Python Style Guide:\
     - Singular inline comments should be above the code\
-        - Yes:
+         - Yes:
             `# Descriptive inline comment with punctuations.\
              if variable_one:`\
         - No:\
