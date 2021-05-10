@@ -23,7 +23,7 @@ http://vision.stanford.edu/aditya86/ImageNetDogs/
 #### Part 1
 Create a model that:
 - detects dog(s) in an image and draw a box around them (object detection)
-- detects the species of the dog(s)
+- detects the species of the dog(s) identified from above
 
 #### Part 2
 idk, maybe host a heroku site where this will run or a dogid app (not an iOS app tho)
