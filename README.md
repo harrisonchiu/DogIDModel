@@ -14,7 +14,7 @@ Exceptions to Google's Python Style Guide:
 - TODO comments should be above its related section and the name is not necessary
   - Example: `# TODO Change this to this.`\ `def some_function():`
 - Type annotation optional for all but can be done for hard to understand code\
-- No abbreviations except for `min, max, dir`\
+- No abbreviations except for `min, max, dir, id`\
 
 ### Dataset
 20,580 pictures of 120 dog species with its bounding box\
