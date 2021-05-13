@@ -4,7 +4,7 @@
 
 ### Coding Style
 Follow Google's Python Style Guide (basically the same as PEP8): https://google.github.io/styleguide/pyguide.html \
-If using bracket programming languages use K&R (One True Brace Style variant).
+For bracket programming languages, use K&R (One True Brace Style variant).
 
 Exceptions to Google's Python Style Guide:
 - Singular inline comments should be above the code
