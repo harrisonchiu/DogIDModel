@@ -8,17 +8,17 @@ Must be in the same directory as annotation, images, and lists
 to create the training_set and validation_set folders in that directory.
 
 Folder structure:
-training_set/validation_set
-    breed_id-breed1
-        image1
+training_set/validation_set  # folders
+    breed_id-breed1  # folder
+        image1.jpg
         annotation1
-        image2
+        image2.jpg
         annotation2
       ...
-    breed_id-breed2
-        image1
+    breed_id-breed2  # folder
+        image1.jpg
         annotation1
-        image2
+        image2.jpg
         annotation2
         ...
     ...
