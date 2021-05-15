@@ -21,7 +21,7 @@ Exceptions to Google's Python Style Guide:
 | min           | minimum       |             |
 | max           | maximum       |             |
 | dir           | directory     |             |
-| id            | identity      |             |
+| id            | identity      | don't use id as verb |
 
 
 ### Dataset
