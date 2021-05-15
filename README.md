@@ -15,12 +15,12 @@ Exceptions to Google's Python Style Guide:
   - Example: `# TODO Change this to this.`\ `def some_function():`
 - Type annotation optional for all but can be done for hard to understand code\
 - No abbreviations except for `min, max, dir, id`\
-| Abbreviation  | Exploded Name | Description |
-| ------------- | ------------- | ----------- |
-| min           | minimum       |             |
-| max           | maximum       |             |
-| dir           | directory     |             |
-| id            | identity      |             |
+ | Abbreviation  | Exploded Name | Description |
+ | ------------- | ------------- | ----------- |
+ | min           | minimum       |             |
+ | max           | maximum       |             |
+ | dir           | directory     |             |
+ | id            | identity      |             |
 
 
 ### Dataset
