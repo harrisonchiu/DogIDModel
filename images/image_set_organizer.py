@@ -24,9 +24,9 @@ training_set/validation_set  # folders
     ...
 """
 
-import os, shutil
+import os
+import shutil
 
-import numpy as np
 import scipy.io as sp
 
 CURRENT_DIR = os.getcwd()
