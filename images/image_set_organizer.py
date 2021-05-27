@@ -5,7 +5,11 @@ Creates a folder structure to organize the images and the annotations
 to prepare for training for the model.
 
 Must be in the same directory as annotation, images, and lists
-to create the training_set and validation_set folders in that directory.
+to create the training_set and validation_set folders in that directory
+where annotation, images, and lists are the extracted files of its .tar
+Example:
+$ ls
+annotation lists images image_set_organizer.py
 
 Folder structure:
 training_set/validation_set  # folders
