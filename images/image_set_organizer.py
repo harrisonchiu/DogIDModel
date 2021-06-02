@@ -4,12 +4,12 @@
 Creates a folder structure to organize the images and the annotations
 to prepare for training for the model.
 
-Must be in the same directory as annotation, images, and lists
+Must be in the same directory as annotations, images, and lists
 to create the training_set and validation_set folders in that directory
 where annotation, images, and lists are the extracted files of its .tar
 Example:
 $ ls
-annotation lists images image_set_organizer.py
+annotations/ images/ image_set_organizer.py train_list validation_list
 
 Folder structure:
 training_set/validation_set  # folders
@@ -31,95 +31,51 @@ training_set/validation_set  # folders
 import os
 import shutil
 
-import scipy.io as sp
-
 CURRENT_DIR = os.getcwd()
-TRAINING_SET_DIR = "training_set"
-VALIDATION_SET_DIR = "validation_set"
+TRAINING_SET_DIR = os.path.join(CURRENT_DIR, "training_set")
+VALIDATION_SET_DIR = os.path.join(CURRENT_DIR, "validation_set")
 
+def organize_tsinghua_set(set_list, directory):
+    """Organize images and annotations to their set (training or validation)
+    as described by the list
+    """
 
-def organize_training_set():
-    """Organize images and annotations for the training set."""
+    f = open(set_list, "r")
+    organized_dog_dirs = f.read().splitlines()
+    number_of_images = 0
 
-    # Get the list of training images and their respective annotations and breed id (1 to 120).
-    training_data = sp.loadmat("lists/train_list.mat")
-    training_images = training_data["file_list"]
-    training_annotation = training_data["annotation_list"]
-    training_labels = training_data["labels"]
+    if not os.path.exists(directory):
+        os.mkdir(directory)
 
-    # Counter for number of training images and annotations
-    number_of_training_images = 0
+    for dog_dir in organized_dog_dirs:
+        # Extract information from the list
+        dog_dir = dog_dir.strip().split("/")
+        category_name = dog_dir[-2]
+        image_name = dog_dir[-1]
+        annotation_name = image_name + ".xml"
 
-    # Make the training dir.
-    if not os.path.exists(TRAINING_SET_DIR):
-        os.mkdir(TRAINING_SET_DIR)
+        # Rename folders to have breed name first
+        new_category_name = category_name.split("-")[-1] + "-" + category_name.split("-")[-2]
 
-    for i in range(len(training_images)):
-        # Extract the class category, image name, annotation name from mat file.
-        category = str(training_images[i][0][0]).split("/")[0]
-        image = str(training_images[i][0][0]).split("/")[1]
-        annotation = str(training_annotation[i][0][0]).split("/")[1]
+        # Folder location where images and annotations will be organized to
+        destination_dir = os.path.join(directory, new_category_name)
 
-        # Find image and annotation dir from the extracted data above.
-        category_dir = CURRENT_DIR + "/" + TRAINING_SET_DIR + "/" + category + "/"
-        images_dir = CURRENT_DIR + "/images/Images/" + category + "/" + image
-        annotation_dir = CURRENT_DIR + "/annotation/Annotation/" + category + "/" + annotation
+        # Directories of specific image and annotation from the tsinghua dataset
+        image_dir = os.path.join(CURRENT_DIR, "images", category_name, image_name)
+        annotation_dir = os.path.join(CURRENT_DIR, "annotations", category_name, annotation_name)
 
-        # Create the category folder to organize the images and annotations by dog breed.
-        if not os.path.exists(category_dir):
-            os.mkdir(category_dir)
-
-        # Copy the images and annotations to the category folder, organizing them.
-        shutil.copyfile(images_dir, category_dir + "/" + image)
-        shutil.copyfile(annotation_dir, category_dir + "/" + annotation)
-
-        # Count the number of training images to ensure all training images are copied
-        number_of_training_images += 1
-
-    print("Number of training images:", number_of_training_images)
-
-
-def organize_validation_set():
-    """Organize images and annotations for the validation set."""
-
-    # Get the list of training images and their respective annotations and breed id (1 to 120).
-    validation_data = sp.loadmat("lists/test_list.mat")
-    validation_images = validation_data["file_list"]
-    validation_annotation = validation_data["annotation_list"]
-    validation_labels = validation_data["labels"]
-
-    # Counter for number of validation images and annotations
-    number_of_validation_images = 0
-
-    # Make the training dir.
-    if not os.path.exists(VALIDATION_SET_DIR):
-        os.mkdir(VALIDATION_SET_DIR)
-
-    for i in range(len(validation_images)):
-        # Extract the class category, image name, annotation name from mat file.
-        category = str(validation_images[i][0][0]).split("/")[0]
-        image = str(validation_images[i][0][0]).split("/")[1]
-        annotation = str(validation_annotation[i][0][0]).split("/")[1]
-
-        # Find image and annotation dir from the extracted data above.
-        category_dir = CURRENT_DIR + "/" + VALIDATION_SET_DIR + "/" + category + "/"
-        images_dir = CURRENT_DIR + "/images/Images/" + category + "/" + image
-        annotation_dir = CURRENT_DIR + "/annotation/Annotation/" + category + "/" + annotation
-
-        # Create the category folder to organize the images and annotations by dog breed.
-        if not os.path.exists(category_dir):
-            os.mkdir(category_dir)
+        if not os.path.exists(destination_dir):
+            os.mkdir(destination_dir)
 
         # Copy the images and annotations to the category folder, organizing them.
-        shutil.copyfile(images_dir, category_dir + "/" + image)
-        shutil.copyfile(annotation_dir, category_dir + "/" + annotation)
+        shutil.copyfile(image_dir, os.path.join(destination_dir, image_name))
+        shutil.copyfile(annotation_dir, os.path.join(destination_dir, annotation_name))
 
-        # Count the number of validation images to ensure all validation images are copied
-        number_of_validation_images += 1
+        number_of_images += 1
 
-    print("Number of validation images:", number_of_validation_images)
+    # Manually counted instead of len(set_list) to ensure correct number of files
+    print("Number of images organized:", number_of_images)
 
 
-if __name__ == "__main__":
-    organize_training_set()
-    organize_validation_set()
+organize_tsinghua_set("train_list", TRAINING_SET_DIR)
+organize_tsinghua_set("validation_list", VALIDATION_SET_DIR)
