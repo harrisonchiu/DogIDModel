@@ -26,9 +26,12 @@ def rename_folders(directory):
 
 def output_stanford_breed_names():
     f = open("stanford_breeds", "w")
-    for breed_folder in os.listdir(TRAINING_SET_DIR):
-        f.write(breed_folder[breed_folder.find("-") + 1:] + "\n")
+
+    breed_folders = sorted([breed_folder.lower() for breed_folder in os.listdir(TRAINING_SET_DIR)])
+
+    for breed_folder in breed_folders:
+        f.write(breed_folder[:breed_folder.find("n02") - 1].lower() + "\n")
 
     f.close()
 
-# output_stanford_breed_names()
+output_stanford_breed_names()
