@@ -33,5 +33,9 @@ Create a model that:
 - detects dog(s) in an image and draw a box around them (object detection)
 - detects the species of the dog(s) identified from above
 
+Problems:
+- Some raw images are rotated 90 degrees, all images should have dogs in normal positions and orientations
+- 
+
 ### Part 2
 idk, maybe host a heroku site where this will run or a dogid app (not an iOS app tho)
