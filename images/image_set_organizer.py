@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Organize the images by training and validation images.
+"""Organize the images and annotations by training and validation.
 
 Creates a folder structure to organize the images and the annotations
 to prepare for training for the model.
@@ -16,11 +16,11 @@ training_set/validation_set  # folders
     breed_id-breed1  # folder
         image1.jpg
         annotation1
-        image2.jpg
+        image2.jpeg
         annotation2
       ...
     breed_id-breed2  # folder
-        image1.jpg
+        image1.jpeg
         annotation1
         image2.jpg
         annotation2
