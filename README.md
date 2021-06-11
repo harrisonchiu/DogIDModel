@@ -16,26 +16,19 @@ Exceptions to Google's Python Style Guide:
 - Type annotation optional for all but can be done for hard to understand code\
 - No abbreviations except for `min, max, dir, id`\
 
-| Abbreviation  | Exploded Name | Description |
-| ------------- | ------------- | ----------- |
-| min           | minimum       |             |
-| max           | maximum       |             |
-| dir           | directory     |             |
-| id            | identity      | don't use id as verb |
+| Abbreviation  | Exploded Name | Description and Notes |
+| ------------- | ------------- | --------------------- |
+| min           | minimum       |                       |
+| max           | maximum       |                       |
+| dir           | directory     |                       |
+| id            | identity      | don't use id as verb  |
 
 
-### Dataset
-20,580 pictures of 120 dog species with its bounding box\
-http://vision.stanford.edu/aditya86/ImageNetDogs/
+### Models Tested So Far
+Format is `training // validation` in 4 decimals for Final Accuracy and Final Loss
 
-### Part 1
-Create a model that:
-- detects dog(s) in an image and draw a box around them (object detection)
-- detects the species of the dog(s) identified from above
-
-Problems:
-- Some raw images are rotated 90 degrees, all images should have dogs in normal positions and orientations
-- 
-
-### Part 2
-idk, maybe host a heroku site where this will run or a dogid app (not an iOS app tho)
+| Base Pretrained Model  | Final Accuracy   | Final Loss          | Epochs | Batchsize | Learning Rate |
+| ---------------------- | ---------------- | ------------------- | ------ | --------- | ------------- | 
+| Inception V3           | 0.7719 // 0.8117 |  0.7154 // 0.6062   | 5      | 16        | 0.0001        |
+| VGG16                  | 0.6715 // 0.5127 | 1.1107 // 1.8994    | 30     | 32        | 0.001         |
+| EfficientNetB5         | 0.8688 // 0.8690 |  0.3810 // 0.4286   | 5      | 24        | 0.001         |
