@@ -1,7 +1,0 @@
-horizontal flip
-max 30degree rotations
-max 15% crops  # i dont like this
-translations to avoid positional bias
-noise injection
-colour transformation (changing RGB and other filters)
-change contrast, gamma, brightness, white balance, sharpen, blur, hue saturation, CLAHE

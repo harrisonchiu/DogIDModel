@@ -7,17 +7,19 @@ Detailed results are saved on Drive. Summary results displayed below.
 ### Models Tested So Far
 Final Accuracy and loss format is `training // validation` to 4 decimals.
 
-| Base Pretrained Model       | Final Accuracy   | Final Loss          | Epochs            | Batchsize | Learning Rate | Training |
-| --------------------------- | ---------------- | ------------------- | ----------------- | --------- | ------------- | -------- |
-| Inception V3                | 0.7719 // 0.8117 | 0.7154 // 0.6062    | 5                 | 16        | 0.0001        | Top only |
-| VGG16                       | 0.6715 // 0.5127 | 1.1107 // 1.8994    | 30                | 32        | 0.001         | Top only |
-| EfficientNetB5-GAP          | 0.8688 // 0.8690 | 0.3810 // 0.4286    | 5                 | 24        | 0.001         | Top only |
-| EfficientNetB5-FC           | 0.6210 // 0.5702 | 1.6619 // 2.0661    | 15                | 24        | 0.001         | Top only |
-| EfficientNetV2-M            | 0.8675 // 0.8870 | 0.3830 // 0.3937    | 20                | 24        | 0.001         | Top only |
-| EfficientNetV2-B3           | 0.8235 //        | 0.5267 //           | 1603/2038 in 10th | 32        | 0.001         | All      |
-| EfficientNetB5-NoisyStudent | 0.8662 //        | 0.3871 //           | 450/2038 in 4th   | 32        | 0.001         | Top only |
+| Base Pretrained Model         | Final Accuracy   | Final Loss       | Epochs            | Batchsize | Learning Rate | Training |
+| ----------------------------- | ---------------- | -----------------| ----------------- | --------- | ------------- | -------- |
+| Inception V3                  | 0.7719 // 0.8117 | 0.7154 // 0.6062 | 5                 | 16        | 0.0001        | Top only |
+| VGG16                         | 0.6715 // 0.5127 | 1.1107 // 1.8994 | 30                | 32        | 0.001         | Top only |
+| EfficientNetB5-GAP            | 0.8688 // 0.8690 | 0.3810 // 0.4286 | 5                 | 24        | 0.001         | Top only |
+| EfficientNetB5-FC             | 0.6210 // 0.5702 | 1.6619 // 2.0661 | 15                | 24        | 0.001         | Top only |
+| EfficientNetV2-M              | 0.8675 // 0.8870 | 0.3830 // 0.3937 | 20                | 24        | 0.001         | Top only |
+| EfficientNetV2-B3             | 0.8235 //        | 0.5267 //        | 1603/2038 in 10th | 32        | 0.001         | All      |
+| EfficientNetB5-NoisyStudent-1 | 0.8662 //        | 0.3871 //        | 450/2038 in 4th   | 32        | 0.001         | Top only |
+| EfficientNetB5-NoisyStudent-2 | 0.8947 // 0.8850 | 0.2875 // 0.4049 | 15                | 24        | 0.001         | Top only |
+| EfficientNetB5-NoisyStudent-3 | 0.8818 // 0.8920 | 0.3361 // 0.3631 | 8                 | 24        | 0.001         | Top only |
 
-#### Notes
+### Notes
 - VGG16 performed the worst.
 - InceptionV3 and ResNet (not recorded) performed similarly.
 - The EfficientNet model family performed the best.
@@ -28,11 +30,29 @@ Final Accuracy and loss format is `training // validation` to 4 decimals.
 - EfficientNetV2-M (pretrained on ImageNet1K) trained much faster (approximately 35 minutes to V1's 50 minutes). But, it offered little improvement and a much larger model size: 230 MB to V1's 110 MB.
     - Performed the worst in terms of model memory size.
     - If the entire model is to be trained, only EfficientNetV2-B3 or lower can be done; EfficientNetV2-S requires more than 12 VRAM.
+- EfficientNetB5-NoisyStudent-2 is the second trial of the NoisyStudent model, trained at 15 epochs.
+    - Overfit past at 5-10th epoch
+    - Highest accuracy at 0.8947
+- EfficientNetB5-NoisyStudent-3 is the third trial of the NoisyStudent model, trained at 8 epochs, the peak in EfficientNetB5-NoisyStudent-2
+    - Highest validation accuracy at 0.8920 and lowest validation loss at 0.3631
+    - Likely no further improvements of the NoisyStudent model
 
-
-#### TODO
-- Train EfficientNetB5 with 10-15? epochs, might as well use noisy student weights. Train locally.
-- Train EfficientNetV2-B3 with 30? epochs. Train on colab because local GPU does not have enough ram.
+### TODO
+- Train EfficientNetV2-B3 with 30+? epochs. Train on colab because local GPU does not have enough ram.
     - Done only for 10 epochs so far with peak accuracy of 0.8235 // ~0.73
         - Validation accuracy seems to be the highest at 7th epoch with 0.7440
         - Could still vastly improve past 10 epochs?
+- Train EfficientNetB6 and B7.
+    - Larger input image size
+        - But most training images are at B5 (~500x500 px) size, so likely little improvements?
+- Create and train own convolutional neural network for fun.
+    - Likely would not do better than our best models
+
+### Conclusions
+**22 June 2021**
+- Improved EfficientNetB5-NoisyStudent-2 by retraining up to its peak epoch (8th epoch).
+- Chosen for highest validation accuracy and lowest validation loss.
+- Has a decent model size: ~130MB.
+
+**21 June 2021**
+- Chose EfficientNetB5-NoisyStudent-2 for highest accuracy while still have a decent size: ~130MB.
