@@ -2,7 +2,8 @@
 
 ### Breed classification only model comparison branch
 Testing branch for different pretrained image classification models.
-Detailed results are saved on Drive. Summary results displayed below.
+Detailed results are saved on Drive. Summary results displayed below.\
+Code to recreate the model will only be for 1 chosen model in **Conclusions** is in `breed_classifier.ipynb` and `breed_classifier.py`.
 
 ### Models Tested So Far
 Final Accuracy and loss format is `training // validation` to 4 decimals.
@@ -14,7 +15,7 @@ Final Accuracy and loss format is `training // validation` to 4 decimals.
 | EfficientNetB5-GAP            | 0.8688 // 0.8690 | 0.3810 // 0.4286 | 5                 | 24        | 0.001         | Top only |
 | EfficientNetB5-FC             | 0.6210 // 0.5702 | 1.6619 // 2.0661 | 15                | 24        | 0.001         | Top only |
 | EfficientNetV2-M              | 0.8675 // 0.8870 | 0.3830 // 0.3937 | 20                | 24        | 0.001         | Top only |
-| EfficientNetV2-B3             | 0.8235 //        | 0.5267 //        | 1603/2038 in 10th | 32        | 0.001         | All      |
+| EfficientNetV2-B3             | 0.8235 // 0.7243 | 0.5267 // 0.9531 | 1603/2038 in 10th | 32        | 0.001         | All      |
 | EfficientNetB5-NoisyStudent-1 | 0.8662 //        | 0.3871 //        | 450/2038 in 4th   | 32        | 0.001         | Top only |
 | EfficientNetB5-NoisyStudent-2 | 0.8947 // 0.8850 | 0.2875 // 0.4049 | 15                | 24        | 0.001         | Top only |
 | EfficientNetB5-NoisyStudent-3 | 0.8818 // 0.8920 | 0.3361 // 0.3631 | 8                 | 24        | 0.001         | Top only |
@@ -42,10 +43,11 @@ Final Accuracy and loss format is `training // validation` to 4 decimals.
     - Done only for 10 epochs so far with peak accuracy of 0.8235 // ~0.73
         - Validation accuracy seems to be the highest at 7th epoch with 0.7440
         - Could still vastly improve past 10 epochs?
+- Train EfficientNetV2-S and EfficientNetV2-M. They perform well, but will need more ram.
 - Train EfficientNetB6 and B7.
     - Larger input image size
         - But most training images are at B5 (~500x500 px) size, so likely little improvements?
-- Create and train own convolutional neural network for fun.
+- Create and train own convolutional neural network.
     - Likely would not do better than our best models
 
 ### Conclusions

@@ -32,7 +32,7 @@ BATCH_SIZE = 24
 LEARNING_RATE = 0.001
 
 
-
+# Gather the images
 image_generator_train = keras.preprocessing.image.ImageDataGenerator(
     # rescale=1./255,
     brightness_range=[0.4, 1.4],
@@ -67,7 +67,7 @@ data_generator_validation = image_generator_validation.flow_from_directory(
 NUMBER_OF_TRAINING_IMAGES = data_generator_train.samples
 NUMBER_OF_VALIDATION_IMAGES = data_generator_validation.samples
 
-
+# Model Architecture
 base_model = keras.applications.EfficientNetB5(
     weights="efficientnetb5_noisystudent_notop.h5", include_top=False, input_shape=(IMAGE_WIDTH, IMAGE_HEIGHT, 3)
 )
@@ -94,7 +94,7 @@ model.compile(
 model.summary()
 
 
-
+# Train and save the model
 history = model.fit(
     data_generator_train,
     epochs=EPOCHS,
@@ -103,10 +103,10 @@ history = model.fit(
     validation_steps=NUMBER_OF_VALIDATION_IMAGES // BATCH_SIZE
 )
 
-
 model.save("efficientnetb5-noisystudent-8epochs")
 
 
+# Results of training
 accuracy = history.history["accuracy"]
 validation_accuracy = history.history["val_accuracy"]
 
