@@ -1,60 +1,108 @@
-# DogID
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="https://github.com/harrisonchiu/dogid-model">
+    <img src="docs/dogid-logo.png" alt="Logo" width="128" height="128">
+  </a>
 
-### Breed classification only model comparison branch
-Testing branch for different pretrained image classification models.
-Detailed results are saved on Drive. Summary results displayed below.\
-Code to recreate the model will only be for 1 chosen model in **Conclusions** is in `breed_classifier.ipynb` and `breed_classifier.py`.
+  <h1 align="center">DogID Machine Learning Model</h1>
 
-### Models Tested So Far
-Final Accuracy and loss format is `training // validation` to 4 decimals.
+  <h3 align="center">
+    Convolutional neural network that identifies dog breeds and does object detection of images
+    <br />
+    <br />
+    <a href="https://github.com/harrisonchiu/dogid-model">DogID App (Mobile App)</a>
+    ·
+    <a href="https://github.com/harrisonchiu/dogid-api">DogID API (Backend API)</a>
+  </h3>
+</p>
 
-| Base Pretrained Model         | Final Accuracy   | Final Loss       | Epochs            | Batchsize | Learning Rate | Training |
-| ----------------------------- | ---------------- | -----------------| ----------------- | --------- | ------------- | -------- |
-| Inception V3                  | 0.7719 // 0.8117 | 0.7154 // 0.6062 | 5                 | 16        | 0.0001        | Top only |
-| VGG16                         | 0.6715 // 0.5127 | 1.1107 // 1.8994 | 30                | 32        | 0.001         | Top only |
-| EfficientNetB5-GAP            | 0.8688 // 0.8690 | 0.3810 // 0.4286 | 5                 | 24        | 0.001         | Top only |
-| EfficientNetB5-FC             | 0.6210 // 0.5702 | 1.6619 // 2.0661 | 15                | 24        | 0.001         | Top only |
-| EfficientNetV2-M              | 0.8675 // 0.8870 | 0.3830 // 0.3937 | 20                | 24        | 0.001         | Top only |
-| EfficientNetV2-B3             | 0.8235 // 0.7243 | 0.5267 // 0.9531 | 1603/2038 in 10th | 32        | 0.001         | All      |
-| EfficientNetB5-NoisyStudent-1 | 0.8662 //        | 0.3871 //        | 450/2038 in 4th   | 32        | 0.001         | Top only |
-| EfficientNetB5-NoisyStudent-2 | 0.8947 // 0.8850 | 0.2875 // 0.4049 | 15                | 24        | 0.001         | Top only |
-| EfficientNetB5-NoisyStudent-3 | 0.8818 // 0.8920 | 0.3361 // 0.3631 | 8                 | 24        | 0.001         | Top only |
 
-### Notes
-- VGG16 performed the worst.
-- InceptionV3 and ResNet (not recorded) performed similarly.
-- The EfficientNet model family performed the best.
-    - B5 variant was chosen because the input size `456x456` is the closest resolution to the majority of our training images. Larger resolutions offered in B6 and B7 is hypothesized to have little improvements while having a longer training time.
-    - B5 with global average pooling performed better than fully connected layers.
-        - See https://arxiv.org/pdf/1312.4400.pdf Section 3.2 for Global average pooling as a classifier replacing fully connected layers.
-    - B5 with NoisyStudent weights (with the same classifying layers as its counterpart: EfficientNetB5-GAP) performed very slightly better than it. May consider using this. If batch normalization is added in the GAP layers, it loses ~3% accuracy in first 2 epochs.
-- EfficientNetV2-M (pretrained on ImageNet1K) trained much faster (approximately 35 minutes to V1's 50 minutes). But, it offered little improvement and a much larger model size: 230 MB to V1's 110 MB.
-    - Performed the worst in terms of model memory size.
-    - If the entire model is to be trained, only EfficientNetV2-B3 or lower can be done; EfficientNetV2-S requires more than 12 VRAM.
-- EfficientNetB5-NoisyStudent-2 is the second trial of the NoisyStudent model, trained at 15 epochs.
-    - Overfit past at 5-10th epoch
-    - Highest accuracy at 0.8947
-- EfficientNetB5-NoisyStudent-3 is the third trial of the NoisyStudent model, trained at 8 epochs, the peak in EfficientNetB5-NoisyStudent-2
-    - Highest validation accuracy at 0.8920 and lowest validation loss at 0.3631
-    - Likely no further improvements of the NoisyStudent model
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
+  <ol>
+    <li>
+      <a href="#about-dogid-model">About DogID Model</a>
+    </li>
+    <li>
+      <a href="#set-up-locally">Set Up Locally</a>
+    </li>
+    <li>
+      <a href="#roadmap">Roadmap</a>
+    </li>
+    <li>
+      <a href="#citation">Citation</a>
+    </li>
+  </ol>
+</details>
 
-### TODO
-- Train EfficientNetV2-B3 with 30+? epochs. Train on colab because local GPU does not have enough ram.
+
+<!-- ABOUT THE PROJECT -->
+## About DogID Model
+
+This repository contains the files to run, train, and build the
+convolutional neural network model that identifies 130 different dog breeds.
+
+It also contains the object detection model that identifies and draws boxes
+around dogs in images.
+
+This model is used in the [DogID App](https://github.com/harrisonchiu/dogid-app)
+to identify dog breeds via the user's camera.
+
+Go to the README in
+[feature/breed-classifier-compare](https://github.com/harrisonchiu/dogid-model/blob/feature/breed-classifier-compare)
+branch to see a summary list of our testing on different pretrained models and classification layers.
+
+Model to detect dog objects in images is still work in progress.
+See this branch: [feature/object-detector-a](https://github.com/harrisonchiu/dogid-model/tree/feature/object-detector-a)
+
+
+<!-- GETTING STARTED -->
+## Set Up Locally
+
+To get a local copy up and running follow these simple steps,
+assuming jupyter notebook and Python are installed.
+
+1. Clone the repo
+    ```sh
+    git clone https://github.com/harrisonchiu/dogid-model.git && cd dogid-model
+    ```
+2. Install Python library requirements
+    ```sh
+    pip install -r requirements.txt
+    ```
+3. Run jupyter file
+    ```sh
+    jupyter notebook breed_classifier.ipynb
+    ```
+
+
+<!-- ROADMAP -->
+## Roadmap
+- [ ] Train EfficientNetV2-B3 with 30+? epochs. Train on colab because local GPU does not have enough ram.
     - Done only for 10 epochs so far with peak accuracy of 0.8235 // ~0.73
         - Validation accuracy seems to be the highest at 7th epoch with 0.7440
         - Could still vastly improve past 10 epochs?
-- Train EfficientNetV2-S and EfficientNetV2-M. They perform well, but will need more ram.
-- Train EfficientNetB6 and B7.
+- [ ] Train EfficientNetV2-S and EfficientNetV2-M. They perform well, but will need more ram.
+- [ ] Train EfficientNetB6 and B7.
     - Larger input image size
         - But most training images are at B5 (~500x500 px) size, so likely little improvements?
-- Create and train own convolutional neural network.
-    - Likely would not do better than our best models
+- [x] Create and train own convolutional neural network.
+  - [ ] Improve its accuracy to at least 75%
+- [ ] Finish Object detector model that detects dogs in images and videos
 
-### Conclusions
-**22 June 2021**
-- Improved EfficientNetB5-NoisyStudent-2 by retraining up to its peak epoch (8th epoch).
-- Chosen for highest validation accuracy and lowest validation loss.
-- Has a decent model size: ~130MB.
 
-**21 June 2021**
-- Chose EfficientNetB5-NoisyStudent-2 for highest accuracy while still have a decent size: ~130MB.
+## Citation
+
+We used Tsinghua dog dataset.
+
+```
+@article{Zou2020ThuDogs,
+  title={A new dataset of dog breed images and a benchmark for fine-grained classification},
+  author={Zou, Ding-Nan and Zhang, Song-Hai and Mu, Tai-Jiang and Zhang, Min},
+  journal={Computational Visual Media},
+  year={2020},
+  url={https://doi.org/10.1007/s41095-020-0184-6}
+}
+```
