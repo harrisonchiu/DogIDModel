@@ -10,6 +10,7 @@ Final Accuracy and loss format is `training // validation` to 4 decimals.
 
 | Base Pretrained Model         | Final Accuracy   | Final Loss       | Epochs            | Batchsize | Learning Rate | Training |
 | ----------------------------- | ---------------- | -----------------| ----------------- | --------- | ------------- | -------- |
+| Own model**                   | 0.6969 // 0.7234 | 1.3452 // 2.3012 | 10                | 16        | 0.001         | Own model|
 | Inception V3                  | 0.7719 // 0.8117 | 0.7154 // 0.6062 | 5                 | 16        | 0.0001        | Top only |
 | VGG16                         | 0.6715 // 0.5127 | 1.1107 // 1.8994 | 30                | 32        | 0.001         | Top only |
 | EfficientNetB5-GAP            | 0.8688 // 0.8690 | 0.3810 // 0.4286 | 5                 | 24        | 0.001         | Top only |
@@ -19,6 +20,9 @@ Final Accuracy and loss format is `training // validation` to 4 decimals.
 | EfficientNetB5-NoisyStudent-1 | 0.8662 //        | 0.3871 //        | 450/2038 in 4th   | 32        | 0.001         | Top only |
 | EfficientNetB5-NoisyStudent-2 | 0.8947 // 0.8850 | 0.2875 // 0.4049 | 15                | 24        | 0.001         | Top only |
 | EfficientNetB5-NoisyStudent-3 | 0.8818 // 0.8920 | 0.3361 // 0.3631 | 8                 | 24        | 0.001         | Top only |
+
+**Our own model was based on VGG16 architecture which are composed of multiple blocks of
+many Convolutional 2D layers, followed by MaxPooling and Dropout layers.
 
 ### Notes
 - VGG16 performed the worst.
@@ -47,7 +51,7 @@ Final Accuracy and loss format is `training // validation` to 4 decimals.
 - Train EfficientNetB6 and B7.
     - Larger input image size
         - But most training images are at B5 (~500x500 px) size, so likely little improvements?
-- Create and train own convolutional neural network.
+- [x] Create and train own convolutional neural network.
     - Likely would not do better than our best models
 
 ### Conclusions
