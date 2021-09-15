@@ -51,7 +51,7 @@ This model is used in the [DogID App](https://github.com/harrisonchiu/dogid-app)
 to identify dog breeds via the user's camera.
 
 Go to the README in
-[feature/breed-classifier-compare](https://github.com/harrisonchiu/dogid-model/blob/feature/breed-classifier-compare)
+[feature/breed-classifier-compare](https://github.com/harrisonchiu/dogid-model/tree/feature/breed-classifier-compare)
 branch to see a summary list of our testing on different pretrained models and classification layers.
 
 Model to detect dog objects in images is still work in progress.
