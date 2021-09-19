@@ -1,18 +1,36 @@
-udacity dog dataset: `https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/dogImages.zip`
+# Dog Image Datasets
 
-note that some images may be repeated
+Udacity dog dataset:\
+`https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/dogImages.zip`
 
-will now base image dataset on the tsinghua dataset\
-stanford_120_breeds \subset tsinghua_130_breeds\
-some images in stanford are not present in tsinghua, but many are
+Oxford pets dataset with bounding boxes:\
+`https://www.robots.ox.ac.uk/~vgg/data/pets/`
 
-use tsinghua as base for dog breed identifier and dog object recognition\
-add missing stanford images if needed (for breed identifier, unlikely; for dog object recognition, more likely)\
+Microsoft cats and dogs dataset:\
+`https://www.tensorflow.org/datasets/catalog/cats_vs_dogs`\
+OR (for direct link)\
+`https://download.microsoft.com/download/3/E/1/3E1C3F21-ECDB-4869-8368-6DEBA77B919F/kagglecatsanddogs_3367a.zip`
 
-will add udacity, oxford, microsoft dog images but does not have bounding boxes
+Stanford dog dataset with bounding boxes:\
+`http://vision.stanford.edu/aditya86/ImageNetDogs/`
 
-`n` prefix - tsinghua
-`s` prefix - stanford
-`u` prefix - udacity
-`x` prefix - oxford
-`m` prefix - microsoft
+Tsinghua dog dataset with bounding boxes:\
+For the most part seems like a superset of Stanford dog dataset, except missing a couple pictures for a few breeds\
+`https://cg.cs.tsinghua.edu.cn/ThuDogs/`
+
+Potentially the dog dataset created by [DogID API](https://github.com/harrisonchiu/dogid-api)
+
+
+Some images may be repeated for each dataset; compare hashes to see when parsing the raw data.
+
+Currently Tsinghua is the main dataset; will add more datasets later
+
+```
+@article{Zou2020ThuDogs,
+  title={A new dataset of dog breed images and a benchmark for fine-grained classification},
+  author={Zou, Ding-Nan and Zhang, Song-Hai and Mu, Tai-Jiang and Zhang, Min},
+  journal={Computational Visual Media},
+  year={2020},
+  url={https://doi.org/10.1007/s41095-020-0184-6}
+}
+```
