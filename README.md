@@ -15,11 +15,15 @@ Final Accuracy and loss format is `training // validation` to 4 decimals.
 | VGG16                         | 0.6715 // 0.5127 | 1.1107 // 1.8994 | 30                | 32        | 0.001         | Top only |
 | EfficientNetB5-GAP            | 0.8688 // 0.8690 | 0.3810 // 0.4286 | 5                 | 24        | 0.001         | Top only |
 | EfficientNetB5-FC             | 0.6210 // 0.5702 | 1.6619 // 2.0661 | 15                | 24        | 0.001         | Top only |
-| EfficientNetV2-M              | 0.8675 // 0.8870 | 0.3830 // 0.3937 | 20                | 24        | 0.001         | Top only |
-| EfficientNetV2-B3             | 0.8235 // 0.7243 | 0.5267 // 0.9531 | 1603/2038 in 10th | 32        | 0.001         | All      |
+| EfficientNetV2M               | 0.8675 // 0.8870 | 0.3830 // 0.3937 | 20                | 24        | 0.001         | Top only |
+| EfficientNetV2B3              | 0.8235 // 0.7243 | 0.5267 // 0.9531 | 1603/2038 in 10th | 32        | 0.001         | All      |
 | EfficientNetB5-NoisyStudent-1 | 0.8662 //        | 0.3871 //        | 450/2038 in 4th   | 32        | 0.001         | Top only |
 | EfficientNetB5-NoisyStudent-2 | 0.8947 // 0.8850 | 0.2875 // 0.4049 | 15                | 24        | 0.001         | Top only |
 | EfficientNetB5-NoisyStudent-3 | 0.8818 // 0.8920 | 0.3361 // 0.3631 | 8                 | 24        | 0.001         | Top only |
+| EfficientNetB0                | 0.8780 // 0.7832 | 0.4945 // 0.8960 | 10                | 24        | 0.001         | All      |
+| EfficientNetB0-NoisyStudent   | 0.8081 // 0.7957 | 0.5753 // 0.6998 | 10                | 24        | 0.001         | Top only |
+| EfficientNetB1-NoisyStudent   | 0.8330 // 0.8210 | 0.4933 // 0.8210 | 10                | 24        | 0.001         | Top only |
+| EfficientNetV2B0              | 0.8747 // 0.8079 | 0.3667 // 0.6724 | 10                | 24        | 0.001         | All      |
 
 **Our own model was based on VGG16 architecture which are composed of multiple blocks of
 many Convolutional 2D layers, followed by MaxPooling and Dropout layers.
