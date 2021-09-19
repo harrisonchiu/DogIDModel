@@ -23,18 +23,21 @@ NUMBER_OF_TRAINING_IMAGES = 0
 NUMBER_OF_VALIDATION_IMAGES = 0
 
 # Must be the same input size as the base model
-# Currently using: EfficientNetB5 - (456, 456)
-IMAGE_WIDTH = 240
-IMAGE_HEIGHT = 240
+# Currently using: EfficientNetV2-B0 - (224, 224)
+# EfficientNetB1 - (240, 240)
+# EfficientNetB0 - (224, 224)
+# EfficientNetB5 - (456, 456)
+IMAGE_WIDTH = 224
+IMAGE_HEIGHT = 224
 
 EPOCHS = 10
-BATCH_SIZE = 24
-LEARNING_RATE = 0.001
+BATCH_SIZE = 32
+LEARNING_RATE = 0.0001
 
 
 # Gather the images
 image_generator_train = keras.preprocessing.image.ImageDataGenerator(
-    # rescale=1./255,
+    rescale=1./255,
     brightness_range=[0.4, 1.4],
     channel_shift_range=30,
     rotation_range=30,
@@ -54,7 +57,7 @@ data_generator_train = image_generator_train.flow_from_directory(
 )
 
 image_generator_validation = keras.preprocessing.image.ImageDataGenerator(
-    # rescale=1./255
+    rescale=1./255
 )
 
 data_generator_validation = image_generator_validation.flow_from_directory(
@@ -67,23 +70,22 @@ data_generator_validation = image_generator_validation.flow_from_directory(
 NUMBER_OF_TRAINING_IMAGES = data_generator_train.samples
 NUMBER_OF_VALIDATION_IMAGES = data_generator_validation.samples
 
+
+import tensorflow_hub as hub
+
 # Model Architecture
-base_model = keras.applications.EfficientNetB5(
-    weights="noisy_student_efficientnet-b1.h5", include_top=False, input_shape=(IMAGE_WIDTH, IMAGE_HEIGHT, 3)
-)
+# base_model = hub.load("gs://cloud-tpu-checkpoints/efficientnet/v2/hub/" + "efficientnetv2-b0" + "/feature-vector")
+base_model = hub.load("https://tfhub.dev/tensorflow/efficientnet/b0/feature-vector/1")
 
-inputs = keras.Input(shape=(IMAGE_WIDTH, IMAGE_HEIGHT, 3))
-x = tf.cast(inputs, dtype=tf.uint8)
-x = base_model(x, training=False)
+keras.backend.clear_session()
+model = keras.Sequential([
+    keras.layers.InputLayer(input_shape=[IMAGE_WIDTH, IMAGE_HEIGHT, 3]),
+    hub.KerasLayer(base_model, trainable=True, name="efficientnet-b0"),
+    keras.layers.Dropout(0.2),
+    keras.layers.Dense(130, activation="softmax"),
+])
 
-x = keras.layers.GlobalAveragePooling2D()(x)
-# x = keras.layers.Dropout(0.2)(x)
-
-outputs = keras.layers.Dense(130, activation="softmax")(x)
-model = keras.models.Model(inputs=inputs, outputs=outputs)
-
-for layer in base_model.layers:
-    layer.trainable = False
+model.build((None, IMAGE_WIDTH, IMAGE_HEIGHT, 3))
 
 model.compile(
     optimizer=keras.optimizers.Adam(learning_rate=LEARNING_RATE),
@@ -103,8 +105,7 @@ history = model.fit(
     validation_steps=NUMBER_OF_VALIDATION_IMAGES // BATCH_SIZE
 )
 
-model.save("efficientnetb1-noisystudent-10epochs")
-
+model.save("efficientnetv2-b0-10epochs")
 
 # Results of training
 accuracy = history.history["accuracy"]
